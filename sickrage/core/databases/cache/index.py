@@ -16,11 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with SickRage.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
 
 from hashlib import md5
 
-from CodernityDB.hash_index import HashIndex
+from CodernityDB3.hash_index import HashIndex
 
 
 class CacheLastUpdateIndex(HashIndex):
@@ -32,10 +31,12 @@ class CacheLastUpdateIndex(HashIndex):
 
     def make_key_value(self, data):
         if data.get('_t') == 'lastUpdate' and data.get('provider'):
-            return md5(data.get('provider')).hexdigest(), None
+            return md5(data.get('provider').encode('utf-8')).hexdigest(), None
 
     def make_key(self, key):
-        return md5(key.encode('utf-8')).hexdigest()
+        if isinstance(key, str):
+            key = key.encode('utf-8')
+        return md5(key).hexdigest()
 
 
 class CacheLastSearchIndex(HashIndex):
@@ -47,10 +48,12 @@ class CacheLastSearchIndex(HashIndex):
 
     def make_key_value(self, data):
         if data.get('_t') == 'lastSearch' and data.get('provider'):
-            return md5(data.get('provider')).hexdigest(), None
+            return md5(data.get('provider').encode('utf-8')).hexdigest(), None
 
     def make_key(self, key):
-        return md5(key.encode('utf-8')).hexdigest()
+        if isinstance(key, str):
+            key = key.encode('utf-8')
+        return md5(key).hexdigest()
 
 
 class CacheSceneExceptionsIndex(HashIndex):
@@ -77,10 +80,12 @@ class CacheSceneNamesIndex(HashIndex):
 
     def make_key_value(self, data):
         if data.get('_t') == 'scene_names' and data.get('name'):
-            return md5(data.get('name')).hexdigest(), None
+            return md5(data.get('name').encode('utf-8')).hexdigest(), None
 
     def make_key(self, key):
-        return md5(key.encode('utf-8')).hexdigest()
+        if isinstance(key, str):
+            key = key.encode('utf-8')
+        return md5(key).hexdigest()
 
 
 class CacheNetworkTimezonesIndex(HashIndex):
@@ -92,10 +97,12 @@ class CacheNetworkTimezonesIndex(HashIndex):
 
     def make_key_value(self, data):
         if data.get('_t') == 'network_timezones' and data.get('network_name'):
-            return md5(data.get('network_name')).hexdigest(), None
+            return md5(data.get('network_name').encode('utf-8')).hexdigest(), None
 
     def make_key(self, key):
-        return md5(key.encode('utf-8')).hexdigest()
+        if isinstance(key, str):
+            key = key.encode('utf-8')
+        return md5(key).hexdigest()
 
 
 class CacheSceneExceptionsRefreshIndex(HashIndex):
@@ -107,10 +114,12 @@ class CacheSceneExceptionsRefreshIndex(HashIndex):
 
     def make_key_value(self, data):
         if data.get('_t') == 'scene_exceptions_refresh' and data.get('list'):
-            return md5(data.get('list')).hexdigest(), None
+            return md5(data.get('list').encode('utf-8')).hexdigest(), None
 
     def make_key(self, key):
-        return md5(key.encode('utf-8')).hexdigest()
+        if isinstance(key, str):
+            key = key.encode('utf-8')
+        return md5(key).hexdigest()
 
 
 class CacheProvidersIndex(HashIndex):
@@ -122,10 +131,12 @@ class CacheProvidersIndex(HashIndex):
 
     def make_key_value(self, data):
         if data.get('_t') == 'providers' and data.get('provider'):
-            return md5(data.get('provider')).hexdigest(), None
+            return md5(data.get('provider').encode('utf-8')).hexdigest(), None
 
     def make_key(self, key):
-        return md5(key.encode('utf-8')).hexdigest()
+        if isinstance(key, str):
+            key = key.encode('utf-8')
+        return md5(key).hexdigest()
 
 
 class CacheQuicksearchIndex(HashIndex):

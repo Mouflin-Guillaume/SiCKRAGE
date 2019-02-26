@@ -16,11 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with SickRage.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
 
 from hashlib import md5
 
-from CodernityDB.hash_index import HashIndex
+from CodernityDB3.hash_index import HashIndex
 
 
 class MainVersionIndex(HashIndex):
@@ -182,10 +181,12 @@ class MainFailedSnatchesIndex(HashIndex):
 
     def make_key_value(self, data):
         if data.get('_t') == 'failed_snatches' and data.get('release'):
-            return md5(data.get('release')).hexdigest(), None
+            return md5(data.get('release').encode('utf-8')).hexdigest(), None
 
     def make_key(self, key):
-        return md5(key.encode('utf-8')).hexdigest()
+        if isinstance(key, str):
+            key = key.encode('utf-8')
+        return md5(key).hexdigest()
 
 
 class MainFailedSnatchHistoryIndex(HashIndex):

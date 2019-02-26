@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with SickRage.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
+
 
 import codecs
 import functools
@@ -146,15 +146,12 @@ def to_unicode(var):
 
 def strip_accents(name):
     try:
-        # strip accents
-        try:
-            name.decode('ascii')
-        except UnicodeEncodeError:
-            pass
-
         name = unicodedata.normalize('NFKD', name).encode('ASCII', 'ignore')
     except UnicodeDecodeError:
         pass
+
+    if isinstance(name, bytes):
+        name = name.decode()
 
     return name
 
